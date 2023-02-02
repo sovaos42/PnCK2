@@ -1,12 +1,14 @@
 *{
     font-family: Roboto;
+    background-color: #fafafa;
 }
 
 .note{
     margin: 10px;
     width: 400px;
-    height: 500px;
+    height: 650px;
     border: 3px solid #6162AD;
+    border-radius: 7px;
 }
 
 .row {
@@ -21,15 +23,50 @@
 }
 
 .all-form-cards {
-    width: 400px;
-    height: 300px;
+    width: 320px;
+    height: 225px;
     margin: 10px;
     padding: 10px;
     border: 3px solid rgb(140, 140, 245);
+    border-radius: 7px;
 }
 
 .from-cards{
     display: flex;
     justify-content: center;
+}
 
+.input-name{
+    height: 20px;
+    width: 300px;
+    border: 2px solid #6162AD;
+    border-radius: 3px;
+}
+#list{
+    resize: none;
+    height: 100px;
+    width: 300px;
+    border-radius: 3px;
+}
+
+.button-submit{
+    border: 2px solid #6162AD;
+    border-radius: 3px;
+    width: 300px;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+}
+
+form{
+    width: 300px;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+}
+
+h1{
+    text-align: center;
 }
