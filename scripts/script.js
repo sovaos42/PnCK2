@@ -1,12 +1,19 @@
-Vue.component('notes', {
+let eventBus = new Vue()
 
+Vue.component('notes', {
+    data(){
+        return{
+            listCard: [],
+
+        }
+    },
     template:
     `
     <div class="all">
         <div class="all-notes">
         <div class="row">
             <div class="note">
-                <cards></cards>
+                <cards :listCard="listCard"></cards>
             </div>
             <div class="note">
                 <cards></cards>
@@ -19,44 +26,44 @@ Vue.component('notes', {
                 <form-cards></form-cards>
             </div>
         </div>
-        
+        <notesForm></notesForm>
     </div>
     `,
-
+    mounted(){
+        eventBus.$on('notes-form', cards =>{
+            this.listCard.push(cards)
+        })
+    }
 })
 
 Vue.component('cards',{
-
+    props:{
+        listCard: {
+            type: Array
+        }
+    },
     template:
     `
-    <div class="card">
-    <h3>Card</h3>
-    
-       <div>
-       
-                <ul>
-                      <li v-for="form in forms">
-                          <p>{{ form.name }}</p>
-                          <p>{{ form.list }}</p>
-                      </li>
-                </ul>
+        <div class="card" v-for="cards in listCard">
+            <ul>
+                    <li>
+                        <p>{{cards.name }}</p>
+                        <p>{{ cards.list }}</p>
+                    </li>
+            </ul>
         </div>
-        <notesForm @notes-form="addForm"></notesForm>
-    </div>
+        
     `,
     data(){
         return{
 
-            forms: []
 
         }
     },
     computed: {
     },
     methods: {
-        addForm(notesForm) {
-            this.forms.push(notesForm)
-        }
+        
 
     }
 })
@@ -88,7 +95,7 @@ Vue.component('form-cards', {
                 name: this.name,
                 list: this.list,
             }
-            this.$emit('notes-form', notesForm)
+            eventBus.$emit('notes-form', notesForm)
             this.name = null
             this.list = null
 
