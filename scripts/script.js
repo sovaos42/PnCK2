@@ -3,22 +3,25 @@ let eventBus = new Vue()
 Vue.component('notes', {
     data(){
         return{
-            // listCard: [],
-
+            notes:[{
+                notes1: [],
+                notes2: [],
+                notes3:[]
+            }]
         }
     },
     template:
-    `
+        `
     <div class="all">
-        <div class="all-notes">
-        <div class="row">
-            <div class="note">
+        <div class="all-notes" >
+        <div class="row" >
+            <div class="note1" v-for="(variant, index) in notes" :key="variant.notes1">
                 <cards></cards>
             </div>
-            <div class="note">
+            <div class="note2" v-for="(variant, index) in notes" :key="variant.notes2">
                 
             </div>
-            <div class="note">
+            <div class="note3" v-for="(variant, index) in notes" :key="variant.notes3">
               
             </div>
         </div>
@@ -30,27 +33,26 @@ Vue.component('notes', {
     </div>
     `,
     mounted(){
-        // eventBus.$on('notes-form', cards =>{
-        //     this.listCard.push(cards)
-        // })
+
+    },
+    methods:{
+
     }
+
 })
 
 Vue.component('cards',{
-    // props:{
-    //     listCard: {
-    //         type: Array
-    //     }
-    // },
-    data(){
-            return{
 
-                listCard: []
-            }
-        },
+    data(){
+        return{
+            arrNote:[],
+            listNote: [],
+            listCard: []
+        }
+    },
 
     template:
-    `
+        `
         <div class="card">
             <div class="conc" v-for="cards in listCard">
                     <p>{{ cards.name }}</p>
@@ -63,8 +65,10 @@ Vue.component('cards',{
     computed: {
     },
     methods: {
-        
-
+        addList(item) {
+            this.listNote.push(item)
+            console.log("1")
+        }
     },
     mounted() {
         eventBus.$on('notes-form', cards =>{
@@ -75,14 +79,16 @@ Vue.component('cards',{
 })
 
 Vue.component('form-cards', {
-
+    props:{
+        notes: {
+            type: Array
+        }
+    },
     template:
-    `
+        `
     <div class="all-form-cards">
     <div class="center">
-   <form @submit.prevent="onForm"> 
-        
-            
+   <form @submit.prevent="onForm" v-if="!this.notes1 < 2"> 
             <input v-model="name" type="text" placeholder="name" class="input-name"><br>
             <label for="list">Enter notes</label><br>
             <textarea v-model="list" id="list" placeholder="Notes"></textarea><br>
@@ -110,13 +116,13 @@ Vue.component('form-cards', {
         onForm(){
             if(this.name && this.list && 3 <= this.list.split("\n").length && this.list.split("\n").length <= 5){
 
-            let notesForm = {
-                name: this.name,
-                list: this.list,
-            }
-            eventBus.$emit('notes-form', notesForm)
-            this.name = null
-            this.list = null
+                let notesForm = {
+                    name: this.name,
+                    list: this.list,
+                }
+                eventBus.$emit('notes-form', notesForm)
+                this.name = null
+                this.list = null
             }
             else{
                 this.errors = []
@@ -134,5 +140,6 @@ let app = new Vue({
     el: '#app',
     data:{
 
-    }
+    },
+
 })

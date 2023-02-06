@@ -3,13 +3,26 @@
     background-color: #fafafa;
 }
 
-.note{
+.note1{
     margin: 10px;
     width: 400px;
     height: 650px;
     border: 3px solid #6162AD;
     border-radius: 7px;
 }
+.note2{
+    margin: 10px;
+    width: 400px;
+    height: 650px;
+    border: 3px solid #6162AD;
+    border-radius: 7px;
+}.note3{
+     margin: 10px;
+     width: 400px;
+     height: 650px;
+     border: 3px solid #6162AD;
+     border-radius: 7px;
+ }
 
 .row {
     display: flex;
