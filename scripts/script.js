@@ -65,7 +65,13 @@ Vue.component('cards',{
         <div class="card">
             <div class="conc">
                     <p>{{ formCards.name }}</p>
-                    <p style="white-space: pre-line;"> {{ formCards.list }}</p>
+                    <ul>
+                        <li v-for="list in formCards.arrList">
+                                {{list.title}}
+                            </div>
+                            
+                        </li>
+                    </ul>
             </div>
         </div>
         
@@ -81,12 +87,17 @@ Vue.component('form-cards', {
 
     template:
         `
+    </div>
     <div class="all-form-cards">
     <div class="center">
    <form @submit.prevent="onForm"> 
-            <input v-model="name" type="text" placeholder="name" class="input-name" :disabled="!check"><br>
-            <label for="list">Enter notes</label><br>
-            <textarea v-model="list" id="list" placeholder="Notes" :disabled="!check"></textarea><br>
+            <label for="name">Имя заметки</label>
+            <input v-model="name" id="name" type="text" placeholder="name" class="input-name"><br>
+            <input v-model="listOne" type="text" placeholder="Заметка 1">
+            <input v-model="listTwo" type="text" placeholder="Заметка 2">
+            <input v-model="listThree" type="text" placeholder="Заметка 3">
+            <input v-model="listFour" type="text" placeholder="Заметка 4">
+            <input v-model="listFive" type="text" placeholder="Заметка 5">
             <button type="submit" class="button-submit" :disabled="!check">Add notes</button>
         </form>
         </div>
@@ -102,29 +113,42 @@ Vue.component('form-cards', {
     data(){
         return{
             name: null,
-            list: null,
+            listOne: null,
+            listTwo: null,
+            listThree: null,
+            listFour: null,
+            listFive: null,
             errors: [],
         }
     },
     methods:{
-
         onForm(){
-            if(this.name && this.list && 3 <= this.list.split("\n").length && this.list.split("\n").length <= 5){
-
+            if(this.listOne && this.listTwo && this.listThree){
                 let formCards = {
                     name: this.name,
-                    list: this.list,
+                    arrList:[
+                        {title: this.listOne, complete: false},
+                        {title: this.listTwo, complete: false},
+                        {title: this.listThree, complete: false},
+                        {title: this.listFour, complete: false},
+                        {title: this.listFive, complete: false},
+                    ]
                 }
                 eventBus.$emit('notes-form', formCards)
+
                 this.name = null
-                this.list = null
+                this.listOne = null
+                this.listTwo = null
+                this.listThree = null
+                this.listFour = null
+                this.listFive = null
             }
             else{
-                this.errors = []
+                
                 if(!this.name) this.errors.push("Введите заголовок.")
-                if(!this.list) this.errors.push("Введите текст.")
-                if(this.list.split("\n").length <= 3) this.errors.push("Минимум 3.")
-                if(this.list.split("\n").length >= 5) this.errors.push("Максимум 5.")
+                if(!this.listOne) this.errors.push("Заполните заметку 1.")
+                if(!this.listTwo) this.errors.push("Заполните заметку 2.")
+                if(!this.listThree) this.errors.push("Заполните заметку 3.")
             }
         },
 
